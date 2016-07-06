@@ -5,7 +5,7 @@ chainer implementation of [Adversarial Autoencoder [arXiv:1511.05644]](http://ar
 ## Run
 
 ```
-py train.py [-g GPU_ID] [-z latent_dim]
+python train.py [-g GPU_ID] [-z latent_dim]
 ```
 
 ## MNIST (z=2)
