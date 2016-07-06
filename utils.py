@@ -82,10 +82,10 @@ def visualize_10_2d_gaussian_prior(n_z, y_label, visualization_dir=None):
     pylab.show()
 
 
-def visualize_labeled_z(xp, model, x, y_label, visualization_dir, epoch):
+def visualize_labeled_z(xp, model, x, y_label, visualization_dir, epoch, gpu=False):
     x = chainer.Variable(xp.asarray(x))
-    z_batch = model.encode(x, test=True)
-    z_batch = z_batch.data.get()
+    z_batch = model.encode(x, test=True).to_cpu()
+    z_batch = z_batch.data
 
     fig = pylab.gcf()
     fig.set_size_inches(8.0, 8.0)
@@ -110,13 +110,13 @@ def visualize_labeled_z(xp, model, x, y_label, visualization_dir, epoch):
     pylab.xlabel("z1")
     pylab.ylabel("z2")
     pylab.savefig("{}/labeled_z_{}.png".format(visualization_dir, epoch))
-    pylab.show()
+    # pylab.show()
 
 
-def visualize_reconstruction(xp, model, x, visualization_dir, epoch):
+def visualize_reconstruction(xp, model, x, visualization_dir, epoch, gpu=False):
     x_variable = chainer.Variable(xp.asarray(x))
-    _x = model.decode(model.encode(x_variable), test=True)
-    _x = _x.data.get()
+    _x = model.decode(model.encode(x_variable), test=True).to_cpu()
+    _x = _x.data
 
     fig = pylab.gcf()
     fig.set_size_inches(8.0, 8.0)
@@ -133,4 +133,4 @@ def visualize_reconstruction(xp, model, x, visualization_dir, epoch):
         # (config.img_channel, config.img_width, config.img_width)), interpolation="none")
         pylab.axis("off")
     pylab.savefig("{}/reconstruction_{}.png".format(visualization_dir, epoch))
-    pylab.show()
+    # pylab.show()

@@ -63,7 +63,8 @@ N = len(x_train)
 model = AAE(784, n_z, hidden_units_enc=(1000, 1000, 500), hidden_units_dec=(500,1000,1000))
 dis = Discriminator(n_z+10)
 
-if args.gpu >= 0:
+use_gpu = args.gpu >= 0
+if use_gpu:
     cuda.get_device(args.gpu).use()
     model.to_gpu()
     dis.to_gpu()
@@ -103,7 +104,7 @@ for epoch in range(1, n_epoch+1):
         loss_reconstruction = F.bernoulli_nll(x, _x) / batchsize
 
         # Adversarial phase
-        z_real_batch = utils.sample_z_from_n_2d_gaussian_mixture(batchsize, n_z, y_label, 10, True)
+        z_real_batch = utils.sample_z_from_n_2d_gaussian_mixture(batchsize, n_z, y_label, 10, use_gpu)
         z_real_batch_with_label = F.concat((z_real_batch, y))
         p_real_batch = dis(z_real_batch_with_label)
 
