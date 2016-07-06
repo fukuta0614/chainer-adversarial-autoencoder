@@ -8,10 +8,6 @@ chainer implementation of [Adversarial Autoencoder [arXiv:1511.05644]](http://ar
 py train.py [-g GPU_ID] [-z latent_dim]
 ```
 
-Options:
-- -g : GPU id
-- -z : dimension of latent variable (default=2)
-
 ## MNIST (z=2)
 ### 10-2D gaussian prior
 ![prior](https://raw.githubusercontent.com/fukuta0614/chainer-adversarial-autoencoder/master/examples/10_2d-gaussian.png)
