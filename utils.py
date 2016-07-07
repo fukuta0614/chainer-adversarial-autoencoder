@@ -84,9 +84,9 @@ def visualize_10_2d_gaussian_prior(n_z, y_label, visualization_dir=None):
 
 def visualize_labeled_z(xp, model, x, y_label, visualization_dir, epoch, gpu=False):
     x = chainer.Variable(xp.asarray(x))
-    z_batch = model.encode(x, test=True).to_cpu()
+    z_batch = model.encode(x, test=True)
+    z_batch.to_cpu()
     z_batch = z_batch.data
-
     fig = pylab.gcf()
     fig.set_size_inches(8.0, 8.0)
     pylab.clf()
@@ -115,7 +115,8 @@ def visualize_labeled_z(xp, model, x, y_label, visualization_dir, epoch, gpu=Fal
 
 def visualize_reconstruction(xp, model, x, visualization_dir, epoch, gpu=False):
     x_variable = chainer.Variable(xp.asarray(x))
-    _x = model.decode(model.encode(x_variable), test=True).to_cpu()
+    _x = model.decode(model.encode(x_variable), test=True)
+    _x.to_cpu()
     _x = _x.data
 
     fig = pylab.gcf()
